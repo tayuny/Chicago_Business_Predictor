@@ -1,0 +1,25 @@
+io:
+  input_path: "./data/license_1318.csv"
+  roc_path: "./output/roc/"
+  pr_path: "./output/pr/"
+  out_path: "./output/performance.csv"
+
+
+x_cols:["zip code", "theft", ""]
+y_col: "license death"
+
+transform:
+  bins: [""] 
+  top_k_dummy: 
+    - cols : [""]
+    - k : 10
+  dummy:
+    - cols : ["zip code"]
+  imputation: 
+    - meancols:  [""]
+    - mediancols: [""]
+  models:
+    LogisticRegression:
+      C:[0.1,0.2]
+      penality: ["l2"]
+      n_jobs: [-1]

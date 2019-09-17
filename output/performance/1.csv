@@ -1,0 +1,5 @@
+,model_name,parameters,baseline,accuarcy,f1,auc_roc,precision_1%,recall_1%,precision_2%,recall_2%,precision_5%,recall_5%,precision_10%,recall_10%,precision_20%,recall_20%,precision_30%,recall_30%,precision_50%,recall_50%
+0,LinearSVC,"LinearSVC(C=1, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=500,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)",0.7086534894812145,0.477319696889407,0.48180390137803863,0.5735977878960329,0.9788023317435082,0.013811411052119943,0.9583995760466348,0.027047035070664773,0.909697933227345,0.06418155985941823,0.8810873827566107,0.12433261048381067,0.8228763711515023,0.2322365961265236,0.8099553106177027,0.34288491737082183,0.8330454135975836,0.5877663949749495

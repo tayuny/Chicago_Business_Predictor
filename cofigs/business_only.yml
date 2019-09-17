@@ -1,0 +1,77 @@
+io:
+  input_path: "../data/full_dataset.csv"
+
+cols:
+  x_cols:  ['duration', 'application type', 'conditional approval', 'license description', 'zip code', 'ward', 'year']
+  y_col: ["license death"]
+  time_col: ["year"]
+
+transform:
+  dummy:
+    cols : ['application type', 'conditional approval', 'license description', 'zip code', 'ward']
+    k: [30]
+  imputation: 
+    cols:  ['application type', 'conditional approval', 'license description', 'zip code', 'ward']
+    loc_col: ["ward"]
+    time_col: ["year"]
+  scaling:
+    cols: ['application type', 'conditional approval', 'license description', 'zip code', 'ward']
+
+models:
+  KNeighborsClassifier:
+    n_neighbors: [1]
+    weights: ['distance']
+    algorithm: ['auto']
+  DecisionTreeClassifier:
+    criterion: ['gini']
+    max_depth: [1]
+    min_samples_split: [2]
+  RandomForestClassifier:
+    n_estimators: [100]
+    max_depth: [5]
+    max_features: ['sqrt']
+    min_samples_split: [2]
+    n_jobs: [-1]
+  ExtraTreesClassifier:
+    n_estimators: [100]
+    criterion: ['gini']
+    max_depth: [5]
+    max_features: ['sqrt']
+    min_samples_split: [2]
+    n_jobs: [-1]
+  LogisticRegression:
+    penalty: ['l1']
+    C: [1]
+  BaggingClassifier:
+    n_estimators: [1]
+  GradientBoostingClassifier:
+    n_estimators: [100]
+    learning_rate: [0.001]
+    subsample: [0.1]
+    max_depth: [5]
+  AdaBoostClassifier:
+    algorithm: ['SAMME']
+    n_estimators: [1]
+  GaussianNB:
+  LinearSVC:
+    C: [0.00001]
+    penalty: ["l1"]
+    max_iter: [500]
+  
+time:
+  start_year: 2009
+  end_year: 2018
+  update_period: 2
+  test_period: 2
+
+
+matrix:
+  percentage: 30
+  col_list: ['model_name', 'parameters', 'baseline', 'accuarcy', 'f1',
+             'auc_roc', 'precision_1%', 'recall_1%', 'precision_2%',
+             'recall_2%', 'precision_5%', 'recall_5%', 'precision_10%',
+             'recall_10%', 'precision_20%','recall_20%', 'precision_30%',
+             'recall_30%', 'precision_50%', 'recall_50%']
+  roc_path: "../output/roc/"
+  pr_path: "../output/pr/"
+  out_path: "../output/performance/"

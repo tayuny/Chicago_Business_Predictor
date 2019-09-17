@@ -1,0 +1,88 @@
+io:
+  input_path: "../data/full_dataset.csv"
+
+cols:
+  x_cols: ['gini index', 'health coverage population per capita', 'median household income', 'poverty rate per capita',
+          'same house per capita', 'total population', 'unemployment rate', 'abandoned vehicles completion rate',
+          'abandoned vehicles per capita', 'alley lights out completion rate', 'alley lights out per capita',
+          'garbage carts completion rate', 'garbage carts per capita', 'graffiti removal completion rate',
+          'graffiti removal per capita', 'rodent baiting completion rate', 'rodent baiting per capita',
+          'sanitation code complaints completion rate', 'sanitation code complaints per capita',
+          'street lights - all out completion rate', 'street lights - all out per capita', 'street lights - one out completion rate',
+          'street lights - one out per capita', 'tree debris completion rate', 'tree debris per capita',
+          'tree trims completion rate', 'tree trims per capita', 'arson per capita', 'assault per capita', 'battery per capita',
+          'burglary per capita', 'crim sexual assault per capita', 'homicide per capita', 'motor vehicle theft per capita',
+          'robbery per capita', 'theft per capita', 'duration', 'application type', 'conditional approval', 'license description',
+          'zip code', 'ward', 'year']
+  y_col: ["license death"]
+  time_col: ["year"]
+
+transform:
+  dummy:
+    cols : ['application type', 'conditional approval', 'license description', 'zip code', 'ward']
+    k: [30]
+  imputation: 
+    cols:  ['application type', 'conditional approval', 'license description', 'zip code', 'ward']
+    loc_col: ["ward"]
+    time_col: ["year"]
+  scaling:
+    cols: ['application type', 'conditional approval', 'license description', 'zip code', 'ward']
+
+models:
+  DecisionTreeClassifier:
+    criterion: ['gini', 'entropy']
+    max_depth: [1,5,10,20,50,100]
+    min_samples_split: [2,5,10]
+  RandomForestClassifier:
+    n_estimators: [100, 10000]
+    max_depth: [5,50]
+    max_features: ['sqrt','log2']
+    min_samples_split: [2,10]
+    n_jobs: [-1]
+  ExtraTreesClassifier:
+    n_estimators: [100, 10000]
+    criterion: ['gini', 'entropy']
+    max_depth: [5,50]
+    max_features: ['sqrt','log2']
+    min_samples_split: [2,10]
+    n_jobs: [-1]
+  LogisticRegression:
+    penalty: ['l1','l2']
+    C: [0.00001,0.001,0.1,1,10]
+  BaggingClassifier:
+    n_estimators: [1, 10,100]
+  GradientBoostingClassifier:
+    n_estimators: [100, 10000]
+    learning_rate: [0.001,0.1,0.5]
+    subsample: [0.1,0.5,1.0]
+    max_depth: [5,50]
+  AdaBoostClassifier:
+    algorithm: ['SAMME', 'SAMME.R']
+    n_estimators: [1,10,100,1000,10000]
+  GaussianNB:
+  LinearSVC:
+    C: [0.00001,0.0001,0.001,0.01,0.1,1,10]
+    penalty: ["l1", "l2"]
+    max_iter: [500]
+  KNeighborsClassifier:
+    n_neighbors: [1,5,10]
+    weights: ['distance']
+    algorithm: ['auto']
+  
+time:
+  start_year: 2009
+  end_year: 2018
+  update_period: 2
+  test_period: 2
+
+
+matrix:
+  percentage: 30
+  col_list: ['model_name', 'parameters', 'baseline', 'accuarcy', 'f1',
+             'auc_roc', 'precision_1%', 'recall_1%', 'precision_2%',
+             'recall_2%', 'precision_5%', 'recall_5%', 'precision_10%',
+             'recall_10%', 'precision_20%','recall_20%', 'precision_30%',
+             'recall_30%', 'precision_50%', 'recall_50%']
+  roc_path: "../output/roc/acs_311_crime_geo/"
+  pr_path: "../output/pr/acs_311_crime_geo/"
+  out_path: "../output/performance/acs_311_crime_geo/"
