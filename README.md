@@ -2,7 +2,7 @@
 
 Implement a machine learning pipeline to priorize the business licenses that are likely to die in 2 years in Chicago.
 
-The full project report can be found [here](https://drive.google.com/a/uchicago.edu/file/d/1NLHlREFRioDvy4RXcORt5rwpzddIeetA/view?usp=sharing)
+The full project report can be found [here](https://drive.google.com/file/d/1hZIjbbsy9LJaga004xU8KXS1cyRZ0Stk/view?usp=sharing)
 
 ## Pipelines
 * ```cofigs```: a folder contains the configure files of different combinations of features. We use them to pass all the parameters that we need into pipelines.   
